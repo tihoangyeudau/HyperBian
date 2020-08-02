@@ -1,10 +1,10 @@
 [Unit]
-Description=Hyperion ambient light systemd service
+Description=Ambilight WiFi systemd service
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/hyperiond
-WorkingDirectory=/usr/share/hyperion/bin
+ExecStart=/usr/bin/ambilightwifid
+WorkingDirectory=/usr/share/ambilightwifi/bin
 TimeoutStopSec=5
 KillMode=mixed
 Restart=on-failure
