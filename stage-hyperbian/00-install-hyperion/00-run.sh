@@ -13,7 +13,7 @@ echo '           Download Ambilight WiFi'
 curl -sS -L --get $HYPERION_RELEASE | tar --strip-components=1 -C ${ROOTFS_DIR}/usr/share/ share/ambilightwifi -xz
 
 # Copy service file and cleanup
-cp ambilightwifi.service ${ROOTFS_DIR}/etc/systemd/system/ambilightwifi.service
+cp ambilightwifi.systemd ${ROOTFS_DIR}/etc/systemd/system/ambilightwifid@.systemd
 rm -r ${ROOTFS_DIR}/usr/share/ambilightwifi/service
 rm -r ${ROOTFS_DIR}/usr/share/ambilightwifi/desktop 2>/dev/null
 
@@ -36,5 +36,5 @@ ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-framebuffer /usr/bin/ambilight
 ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-dispmanx /usr/bin/ambilightwifi-dispmanx 2>/dev/null
 ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-qt /usr/bin/ambilightwifi-qt 2>/dev/null
 echo '           Register Ambilight WiFi'
-systemctl -q enable ambilightwifi.service
+systemctl -q enable ambilightwifid@.systemd
 EOF
