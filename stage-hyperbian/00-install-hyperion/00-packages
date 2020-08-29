@@ -1,2 +1,4 @@
 libcec-dev
 libglvnd-dev
+libjpeg-dev
+libturbojpeg0-dev
