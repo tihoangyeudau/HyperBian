@@ -36,5 +36,5 @@ ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-framebuffer /usr/bin/ambilight
 ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-dispmanx /usr/bin/ambilightwifi-dispmanx 2>/dev/null
 ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-qt /usr/bin/ambilightwifi-qt 2>/dev/null
 echo '           Register Ambilight WiFi'
-systemctl -q enable ambilightwifid@.service
+systemctl -q enable ambilightwifid"@pi".service
 EOF
