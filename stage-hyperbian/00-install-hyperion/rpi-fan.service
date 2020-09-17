@@ -1,0 +1,13 @@
+#! /bin/sh
+### BEGIN INIT INFO
+
+# Provides: rpi-fan
+# Required-Start: $remote_fs $syslog
+# Required-Stop: $remote_fs $syslog
+# Default-Start: S
+# Default-Stop: 
+# Short-Description: RPI-FAN
+# Description: Fan automation on RPi with GPIO
+
+### END INIT INFO
+sudo python /usr/share/rpi-fan/rpi-fan.py &

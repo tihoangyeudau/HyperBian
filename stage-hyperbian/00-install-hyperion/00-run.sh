@@ -9,11 +9,13 @@ HYPERION_LATEST_VERSION=$(curl -sL "$HYPERION_RELEASES_URL" | grep "tag_name" | 
 HYPERION_RELEASE=$HYPERION_DOWNLOAD_URL/$HYPERION_LATEST_VERSION/Ambilight-WiFi-$HYPERION_LATEST_VERSION-Linux-armv6l.tar.gz
 
 # Download latest release
-echo '           Download Ambilight WiFi'
+echo '           Download Ambilight WiFi + rpi fan'
 curl -sS -L --get $HYPERION_RELEASE | tar --strip-components=1 -C ${ROOTFS_DIR}/usr/share/ share/ambilightwifi -xz
+curl -sS -L --get https://github.com/tihoangyeudau/rpi-fan/releases/download/1.0.0/rpi-fan.tar.gz | tar --strip-components=1 -C ${ROOTFS_DIR}/usr/share/ share/rpi-fan -xz
 
 # Copy service file and cleanup
 cp ambilightwifi.service ${ROOTFS_DIR}/etc/systemd/system/ambilightwifid@.service
+cp rpi-fan.service ${ROOTFS_DIR}/etc/init.d/rpi-fan.service
 rm -r ${ROOTFS_DIR}/usr/share/ambilightwifi/service
 rm -r ${ROOTFS_DIR}/usr/share/ambilightwifi/desktop 2>/dev/null
 
@@ -37,4 +39,6 @@ ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-dispmanx /usr/bin/ambilightwif
 ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-qt /usr/bin/ambilightwifi-qt 2>/dev/null
 echo '           Register Ambilight WiFi'
 systemctl -q enable ambilightwifid"@pi".service
+sudo chmod +x /etc/init.d/rpi-fan.service
+sudo update-rc.d rpi-fan.service defaults
 EOF
