@@ -11,7 +11,7 @@ HYPERION_RELEASE=$HYPERION_DOWNLOAD_URL/$HYPERION_LATEST_VERSION/Ambilight-WiFi-
 # Download latest release
 echo '           Download Ambilight WiFi + rpi fan'
 curl -sS -L --get $HYPERION_RELEASE | tar --strip-components=1 -C ${ROOTFS_DIR}/usr/share/ share/ambilightwifi -xz
-curl -sS -L --get https://github.com/tihoangyeudau/rpi-fan/releases/download/1.0.0/rpi-fan.tar.gz | tar --strip-components=1 -C ${ROOTFS_DIR}/usr/share/ share/rpi-fan -xz
+curl -sS -L --get https://github.com/tihoangyeudau/rpi-fan/releases/download/1.0.0/rpi-fan.tar.gz | tar --strip-components=1 -C ${ROOTFS_DIR}/usr/share/ rpi-fan -xz
 
 # Copy service file and cleanup
 cp ambilightwifi.service ${ROOTFS_DIR}/etc/systemd/system/ambilightwifid@.service
