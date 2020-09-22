@@ -15,7 +15,7 @@ curl -sS -L --get https://github.com/tihoangyeudau/rpi-fan/releases/download/1.0
 
 # Copy service file and cleanup
 cp ambilightwifi.service ${ROOTFS_DIR}/etc/systemd/system/ambilightwifid@.service
-cp rpi-fan.service ${ROOTFS_DIR}/etc/init.d/rpi-fan.service
+cp rpi-fan.service ${ROOTFS_DIR}/etc/systemd/system/rpi-fan.service
 rm -r ${ROOTFS_DIR}/usr/share/ambilightwifi/service
 rm -r ${ROOTFS_DIR}/usr/share/ambilightwifi/desktop 2>/dev/null
 
@@ -38,7 +38,6 @@ ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-framebuffer /usr/bin/ambilight
 ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-dispmanx /usr/bin/ambilightwifi-dispmanx 2>/dev/null
 ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-qt /usr/bin/ambilightwifi-qt 2>/dev/null
 echo '           Register Ambilight WiFi'
-systemctl -q enable ambilightwifid"@pi".service
-sudo chmod +x /etc/init.d/rpi-fan.service
-sudo update-rc.d rpi-fan.service defaults
+systemctl -q enable ambilightwifid"@rml".service
+systemctl -q enable rpi-fan.service
 EOF

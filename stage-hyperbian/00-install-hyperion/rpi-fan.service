@@ -1,13 +1,14 @@
-#! /bin/sh
-### BEGIN INIT INFO
+[Unit]
+Description=Rpi Fan automatic
+After=multi-user.target
 
-# Provides: rpi-fan
-# Required-Start: $remote_fs $syslog
-# Required-Stop: $remote_fs $syslog
-# Default-Start: S
-# Default-Stop: 
-# Short-Description: RPI-FAN
-# Description: Fan automation on RPi with GPIO
-
-### END INIT INFO
-sudo python /usr/share/rpi-fan/rpi-fan.py &
+[Service]
+ExecStart=/usr/bin/python3 -u /usr/share/rpi-fan/rpi-fan.py
+WorkingDirectory=/usr/share/rpi-fan/
+StandardOutput=inherit
+StandardError=inherit
+estart=always
+User=rml
+ 
+[Install]
+WantedBy=multi-user.target
