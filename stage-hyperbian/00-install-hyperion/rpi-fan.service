@@ -7,7 +7,7 @@ ExecStart=/usr/bin/python3 -u /usr/share/rpi-fan/rpi-fan.py
 WorkingDirectory=/usr/share/rpi-fan/
 StandardOutput=inherit
 StandardError=inherit
-estart=always
+Restart=always
 User=rml
  
 [Install]
