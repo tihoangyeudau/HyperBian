@@ -30,6 +30,7 @@ sed -i "s/^VERSION=.*$/VERSION=\"${HYPERION_LATEST_VERSION}\"/g" ${ROOTFS_DIR}/u
 on_chroot << EOF
 echo '           Install Ambilight WiFi'
 apt install /tmp/ambilight-wifi.deb
+rm -f /etc/systemd/system/ambilightwifid@.service
 echo '           Register Ambilight WiFi'
 systemctl -q enable ambilightwifi.service
 systemctl -q enable rpi-fan.service
