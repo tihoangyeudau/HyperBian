@@ -6,18 +6,17 @@ HYPERION_RELEASES_URL="https://api.github.com/repos/tihoangyeudau/hyperion.ng/re
 
 # Get the latest version
 HYPERION_LATEST_VERSION=$(curl -sL "$HYPERION_RELEASES_URL" | grep "tag_name" | head -1 | cut -d '"' -f 4)
-HYPERION_RELEASE=$HYPERION_DOWNLOAD_URL/$HYPERION_LATEST_VERSION/Ambilight-WiFi-$HYPERION_LATEST_VERSION-Linux-armv6l.tar.gz
+HYPERION_RELEASE=$HYPERION_DOWNLOAD_URL/$HYPERION_LATEST_VERSION/Ambilight-WiFi-$HYPERION_LATEST_VERSION-Linux-armv6l.deb
 
 # Download latest release
 echo '           Download Ambilight WiFi + rpi fan'
-curl -sS -L --get $HYPERION_RELEASE | tar --strip-components=1 -C ${ROOTFS_DIR}/usr/share/ share/ambilightwifi -xz
+mkdir -p "$ROOTFS_DIR"/tmp
+curl -L $HYPERION_RELEASE --output "$ROOTFS_DIR"/tmp/ambilightwifi.deb
 curl -sS -L --get https://github.com/tihoangyeudau/rpi-fan/releases/download/1.0.0/rpi-fan.tar.gz | tar --strip-components=0 -C ${ROOTFS_DIR}/usr/share/ rpi-fan -xz
 
-# Copy service file and cleanup
+# Copy service file
 cp ambilightwifi.service ${ROOTFS_DIR}/etc/systemd/system/ambilightwifid@.service
 cp rpi-fan.service ${ROOTFS_DIR}/etc/systemd/system/rpi-fan.service
-rm -r ${ROOTFS_DIR}/usr/share/ambilightwifi/service
-rm -r ${ROOTFS_DIR}/usr/share/ambilightwifi/desktop 2>/dev/null
 
 # Enable SPI and force HDMI output
 sed -i "s/^#dtparam=spi=on.*/dtparam=spi=on/" ${ROOTFS_DIR}/boot/config.txt
@@ -30,14 +29,8 @@ sed -i "s/^VERSION=.*$/VERSION=\"${HYPERION_LATEST_VERSION}\"/g" ${ROOTFS_DIR}/u
 
 on_chroot << EOF
 echo '           Install Ambilight WiFi'
-chmod +x -R /usr/share/ambilightwifi/bin
-ln -fs /usr/share/ambilightwifi/bin/ambilightwifid /usr/bin/ambilightwifid
-ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-remote /usr/bin/ambilightwifi-remote
-ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-v4l2 /usr/bin/ambilightwifi-v4l2
-ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-framebuffer /usr/bin/ambilightwifi-framebuffer 2>/dev/null
-ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-dispmanx /usr/bin/ambilightwifi-dispmanx 2>/dev/null
-ln -fs /usr/share/ambilightwifi/bin/ambilightwifi-qt /usr/bin/ambilightwifi-qt 2>/dev/null
+apt install /tmp/ambilightwifi.deb
 echo '           Register Ambilight WiFi'
 systemctl -q enable ambilightwifid"@rml".service
-systemctl -q enable rpi-fan.service
+systemctl -q enable rpi-fan"@rml".service
 EOF
