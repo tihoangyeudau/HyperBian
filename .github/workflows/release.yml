@@ -47,5 +47,5 @@ jobs:
           asset_name: HyperBian.zip
           tag: HyperBian
           release_name: HyperBian
-          body: "Raspberry Pi OS Lite lite with [Ambilight WiFi](https://www.facebook.com/rainbowmusicled) pre installed. Also called Ambilight WiFi Server."
+          body: "Ambilight WiFi Server OS."
           overwrite: true
